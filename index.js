@@ -5,6 +5,7 @@ const port = 5000 || process.env.PORT
 const {routes } = require('./routes/auth.routes');
 const { productRoute } = require('./routes/services');
 const { stripe } = require('./routes/stripe.routes');
+const { articleRoute } = require('./routes/article.route');
 require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ require('./database')();
 app.use('/auth', routes);
 app.use('/stripe', stripe);
 app.use('/product', productRoute);
+app.use('/article', articleRoute);
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome" })
