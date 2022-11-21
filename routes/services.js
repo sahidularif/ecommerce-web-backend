@@ -5,7 +5,7 @@ const { getSingleArticle } = require('../handler/article.handler')
 const router = express.Router()
 
 router.get('/getAllOrder', isAdmin, getAllOrder)
-router.get('/getAllProduct', isAdmin, getAllProduct)
+router.get('/getAllProduct', getAllProduct)
 router.post('/addProduct', isAdmin, addProduct)
 router.get('/single_product/:_id', isAdmin, getSingleArticle);
 
