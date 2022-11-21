@@ -7,16 +7,16 @@ const product = new Schema({
     price: Number,
     size: {
         xs: Boolean,
-        sm: Boolean,
+        s: Boolean,
         m: Boolean,
         l: Boolean,
         xl: Boolean,
         xxl: Boolean,
     },
     color: {
-        color_1: String,
-        color_2: String,
-        color_3: String,
+        color1: String,
+        color2: String,
+        color3: String,
     },
     img_url: String,
 }, { timestamps: false });
