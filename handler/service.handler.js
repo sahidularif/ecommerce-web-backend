@@ -28,9 +28,9 @@ serviceHandler.getAllProduct = async (req, res, next) => {
 serviceHandler.addProduct = async (req, res, next) => {
 
     try {
-        const product = req.body
-        const newProduct = new Product(product)
-        await newProduct.save()
+        console.log(req.body)
+        const product = new Product(req.body)
+        await product.save()
         res.status(200).send("Product successfully added");
       } catch (err) {
         res.status(500).json(err);

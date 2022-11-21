@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllOrder, getAllProduct, addProduct, addArticle } = require('../handler/service.handler')
+const { getAllOrder, getAllProduct, addProduct } = require('../handler/service.handler')
 const { isAdmin } = require('../handler/authHelper')
 const { getSingleArticle } = require('../handler/article.handler')
 const router = express.Router()
