@@ -18,6 +18,7 @@ serviceHandler.getAllProduct = async (req, res, next) => {
 
     try {
         const products = await Product.find();
+        console.log(products);
         res.status(200).send(products);
       } catch (err) {
         res.status(500).json(err);
