@@ -56,7 +56,6 @@ authHandler.login = (req, res, next) => {
     .then((data) => {
       // compare the password entered and the hashed password found
 
-      console.log("bcrypt email", data.email);
       bcrypt
         .compare(req.body.password, data.password)
 
