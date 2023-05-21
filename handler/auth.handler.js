@@ -79,9 +79,9 @@ authHandler.login = (req, res, next) => {
                 isAdmin: data.isAdmin,
               },
             },
-            `${process.env.JWT_SECRET}`,
-            { expiresIn: "1h" }
-          );
+            process.env.JWT_SECRET,
+            { expiresIn: 60 * 120 }
+          )
 
           //   return success response
           res.status(200).send({
@@ -90,10 +90,11 @@ authHandler.login = (req, res, next) => {
           });
         })
         // catch error if password do not match
-        .catch((error) => {
+        .catch((e) => {
+          console.log(e)
           res.status(400).send({
-            message: "Passwords does not match",
-            error,
+            message: "Password does not match",
+            e,
           });
         });
     })
@@ -109,9 +110,12 @@ authHandler.login = (req, res, next) => {
 
 authHandler.verifyToken = (req, res, next) => {
   const token = req.body.jwt;
-  if (token == null) return res.sendStatus(401);
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return res.status(403).send("Invalid auth token...");
+  if (token == null) return res.status(401).send('Unauthorized user');
+  jwt.verify(token, process.env.JWT_SECRET, (e, decoded) => {
+    if (e) {
+      console.log(e)
+      return res.status(403).send("Invalid auth token found...");
+    }
     res.status(200).json({ decoded });
   })
 }

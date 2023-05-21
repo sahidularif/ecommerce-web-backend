@@ -1,29 +1,20 @@
-const jwt = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
 require('dotenv').config();
 
-const auth = (req, res, next) => {
-  const token = req.headers["x-access-token"]
-  // console.log(token)
-  if (!token){
-    console.log('not token')
-    return res.status(401).send("Access denied. Not authenticated...");
-  }
-    
+const verifyToken = (req, res, next) => {
+  const { authorization } = req.headers;
   try {
-    const jwtSecretKey = `${process.env.JWT_SECRET}`;
-    const decoded = jwt.verify(token, jwtSecretKey);
-    const currentDate = new Date();
-    if(decoded.exp * 1000 <currentDate.getTime()){
-      return res.status(403).send("Token expired! Please login again")
-    }
-    req.user = decoded;
-    console.log('req.user')
-    next();
-  } catch (ex) {
-    console.log('invalid token');
-    res.status(403).send("Invalid auth token...");
+    const token = authorization.split(' ')[1];
+    const decoded = verify(token, process.env.JWT_SECRET);
+    const { user } = decoded;
+    req.user = user;
+    next()
+  } catch (err) {
+    res.status(401).send(err);
+    // next("Authentication failure!");
   }
 };
+
 
 // For User Profile
 const isUser = (req, res, next) => {
@@ -38,8 +29,8 @@ const isUser = (req, res, next) => {
 
 // For Admin
 const isAdmin = (req, res, next) => {
-  auth(req, res, () => {
-    if (req.user.user.isAdmin) {
+  verifyToken(req, res, () => {
+    if (req.user.isAdmin) {
       next();
     } else {
       res.status(403).send("Access denied. Not admin...");
@@ -47,4 +38,4 @@ const isAdmin = (req, res, next) => {
   });
 };
 
-module.exports = { auth, isUser, isAdmin };
+module.exports = { verifyToken, isUser, isAdmin };

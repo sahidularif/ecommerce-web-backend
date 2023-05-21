@@ -7,9 +7,9 @@ const upload = require('../handler/uploadHandler')
 const router = express.Router()
 
 router.get('/getAllOrder', isAdmin, getAllOrder)
-router.get('/getAllCategory', getAllCategory)
-router.get('/getAllProduct', getAllProduct)
-router.get('/categories/:id', getSingleCategory);
+router.get('/getAllCategory', isAdmin, getAllCategory)
+router.get('/getAllProduct', isAdmin, getAllProduct)
+router.get('/categories/:id', isAdmin, getSingleCategory);
 router.get('/single_product/:_id', isAdmin, getSingleArticle);
 router.post('/addProduct', isAdmin, addProduct)
 router.post('/addCategory', upload.single('image'), addCategory)

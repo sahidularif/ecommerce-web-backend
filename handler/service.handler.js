@@ -4,8 +4,10 @@ const Product = require("../models/Product");
 const { unlink } = require('fs')
 const path = require('path');
 const Category = require("../models/Category");
+
 const serviceHandler = {};
 serviceHandler.basedir = path.join(__dirname, '../uploads/');
+
 serviceHandler.getAllOrder = async (req, res, next) => {
 
   try {
@@ -21,7 +23,6 @@ serviceHandler.getAllProduct = async (req, res, next) => {
 
   try {
     const products = await Product.find();
-    // console.log(products);
     res.status(200).send(products);
   } catch (err) {
     res.status(500).json(err);
@@ -33,7 +34,6 @@ serviceHandler.getAllCategory = async (req, res, next) => {
 
   try {
     const category = await Category.find();
-    // console.log(products);
     res.status(200).send(category);
   } catch (err) {
     res.status(500).json(err);
@@ -44,7 +44,6 @@ serviceHandler.getAllCategory = async (req, res, next) => {
 serviceHandler.addProduct = async (req, res, next) => {
 
   try {
-    // console.log(req.body)
     const product = new Product(req.body)
     await product.save()
     res.status(200).send("Product successfully added");

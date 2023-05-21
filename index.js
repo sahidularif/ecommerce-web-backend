@@ -27,24 +27,31 @@ app.use('/product', productRoute);
 app.use('/article', articleRoute);
 
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome" })
+    res.json({ message: e })
 });
 
-
+// default error handler
+const errorHandler = (err, req, res, next) => {
+    if (res.headersSent) {
+      return next(err);
+    }
+    res.status(500).json({ error: err });
+  }
+  app.use(errorHandler);
 // Server Liseting 
 const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
 
 
-app.use((err, req, res, next) => {
-    if (res.headersSent) {
-        next()
-    } else {
-        if(err.message){
-            res.status(500).send(err.message)
-        } else {
-            res.send('There was an error')
-        }
-    }
-})
+// app.use((err, req, res, next) => {
+//     if (res.headersSent) {
+//         next()
+//     } else {
+//         if(err.message){
+//             res.status(500).send(err.message)
+//         } else {
+//             res.send('There was an error')
+//         }
+//     }
+// })
