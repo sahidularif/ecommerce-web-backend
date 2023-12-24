@@ -10,7 +10,8 @@ const product = new Schema({
         color2: String,
         color3: String,
     },
-    img_url: String,
+    size: [String],
+    images: [String],
 }, { timestamps: false });
 
 module.exports = mongoose.model('Product', product)
